@@ -12,7 +12,7 @@ open class Constant(val tag: Int): Information {
             return when (_tag) {
                 Type.UTF8           -> Utf8Info(String(data.fully(data.short())))
                 Type.INT, Type.FLOAT, Type.LONG, Type.DOUBLE ->
-                                       NumberInfo(data.int(), _tag)
+                                       NumberInfo(data, _tag)
                 Type.CLASS          -> ClassInfo(data.short())
                 Type.STRING         -> StringInfo(data.short())
                 Type.FIELD, Type.METHOD, Type.INTERFACE ->
@@ -52,7 +52,7 @@ object Type {
         CLASS          -> "Class"
         STRING         -> "String"
         FIELD          -> "Field_ref"
-        METHOD         -> "Mehtod_ref"
+        METHOD         -> "Method_ref"
         INTERFACE      -> "InterfaceMethod_ref"
         NAME_AND_TYPE  -> "NameAndType"
         HANDLE         -> "MethodHandle"
