@@ -1,5 +1,6 @@
 package sds
 
+import sds.classfile.ClassfileStream
 import sds.classfile.Member
 import sds.classfile.attribute.Attribute
 import sds.classfile.constant_pool.Constant
@@ -10,11 +11,11 @@ class Classfile {
     var major:  Int = -1
     var minor:  Int = -1
     var access: String = ""
-    var _this:  Int = -1
-    var _super: Int = -1
-    var interfaces: Array<Int> = arrayOf(0)
-    var pool:   Array<Constant>  = arrayOf(ConstantAdapter(-1))
-    var fields: Array<Member>    = arrayOf(Member())
-    var methos: Array<Member>    = arrayOf(Member())
-    var attributes: Array<Attribute> = arrayOf(Attribute())
+    var _this:  String = ""
+    var _super: String = ""
+    var interfaces: Array<String>    = arrayOf()
+    var pool:       Array<Constant>  = arrayOf()
+    var fields:     Array<Member>    = arrayOf()
+    var methods:    Array<Member>    = arrayOf()
+    var attributes: Array<Attribute> = arrayOf()
 }

@@ -15,7 +15,6 @@ class SDS(args: Array<String>) {
     }
 
     private fun parseArgs(arg: String) {
-        println("init")
         when {
             arg.endsWith(".jar")   -> this.jar = JarFile(File(arg))
             arg.endsWith(".class") -> classfiles.add(arg)
