@@ -8,6 +8,7 @@ import sds.classfile.constant_pool.Constant
 import sds.classfile.constant_pool.ConstantAdapter as Adapter
 import sds.classfile.constant_pool.Type.DOUBLE
 import sds.classfile.constant_pool.Type.LONG
+import sds.util.AccessFlag.get
 
 class ClassfileReader {
     private val classfile: Classfile = Classfile()
@@ -16,17 +17,18 @@ class ClassfileReader {
         val data: Stream = ImplForRandomAccessFile(file)
         read(data)
     }
+
     constructor(stream: InputStream) {
         val data: Stream = ImplForDataInputStream(stream)
         read(data)
     }
 
     private fun read(data: Stream) {
-        classfile.magic = data.int()
-        classfile.minor = data.short()
-        classfile.major = data.short()
-        classfile.pool  = readPool(data.short() - 1, data, mutableListOf())
-        classfile.pool.forEach { println(it) }
+        classfile.magic  = data.int()
+        classfile.minor  = data.short()
+        classfile.major  = data.short()
+        classfile.pool   = readPool(data.short() - 1, data, mutableListOf())
+        classfile.access = get(data.short(), "class")
     }
 
     private fun readPool(len: Int, data: Stream, pool: MutableList<Constant>): Array<Constant> {
@@ -34,12 +36,12 @@ class ClassfileReader {
             return pool.toTypedArray()
         }
         pool.add(Constant.create(data))
-        when(pool.last().tag) {
+        return when(pool.last().tag) {
             DOUBLE, LONG -> {
                 pool.add(Adapter(-1))
-                return readPool(len, data, pool)
+                readPool(len, data, pool)
             }
-            else -> return readPool(len, data, pool)
+            else -> readPool(len, data, pool)
         }
     }
 }
