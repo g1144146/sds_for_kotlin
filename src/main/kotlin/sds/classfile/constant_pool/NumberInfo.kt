@@ -2,8 +2,8 @@ package sds.classfile.constant_pool
 
 import sds.classfile.ClassfileStream
 
-class NumberInfo(data: ClassfileStream, type: Int): Constant(type) {
-    val number: Number = when(tag) {
+class NumberInfo(data: ClassfileStream, type: Int): Constant() {
+    val number: Number = when(type) {
         Type.INT    -> data.int()
         Type.FLOAT  -> data.float()
         Type.LONG   -> data.long()
@@ -11,5 +11,5 @@ class NumberInfo(data: ClassfileStream, type: Int): Constant(type) {
         else -> throw IllegalStateException("unknown number type.")
     }
 
-    override fun toString(): String = super.toString() + "\t" + number.toString()
+    override fun toString(): String = "${number.javaClass.simpleName}Info\t$number"
 }
