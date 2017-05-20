@@ -1,6 +1,6 @@
 # sds_for_kotlin
 
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat)](https://github.com/g1144146/sds_for_kotlin/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/g1144146/sds_for_kotlin.svg?branch=master)](https://travis-ci.org/g1144146/sds_for_kotlin) [![Coverage Status](https://coveralls.io/repos/github/g1144146/sds_for_kotlin/badge.svg?branch=master)](https://coveralls.io/github/g1144146/sds_for_kotlin?branch=master) [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat)](https://github.com/g1144146/sds_for_kotlin/blob/master/LICENSE)
 
 ---
 # Overview
