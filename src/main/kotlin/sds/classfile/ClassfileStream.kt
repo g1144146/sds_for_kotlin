@@ -59,6 +59,7 @@ sealed class ClassfileStream: AutoCloseable {
         override fun unsignedShort(): Int = get(java.lang.Short.BYTES, stream.readUnsignedShort())
         override fun pointer(): Long = pointer
         override fun skip(n: Int) {
+            pointer += n
             stream.skipBytes(n)
         }
         override fun fully(n: Int): ByteArray {

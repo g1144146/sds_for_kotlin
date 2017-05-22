@@ -5,20 +5,17 @@ import sds.classfile.ClassfileStream
 
 open class Constant: Information {
     companion object ConstantFactory {
-        fun create(data: ClassfileStream): Constant {
-            val _tag: Int = data.byte()
-            return when(_tag) {
-                Type.INT,   Type.FLOAT,  Type.LONG, Type.DOUBLE -> NumberInfo(data, _tag)
-                Type.FIELD, Type.METHOD, Type.INTERFACE         -> MemberInfo(_tag, data.short(), data.short())
-                Type.UTF8           -> Utf8Info(String(data.fully(data.short())))
-                Type.CLASS          -> ClassInfo(data.short())
-                Type.STRING         -> StringInfo(data.short())
-                Type.NAME_AND_TYPE  -> NameAndTypeInfo(data.short(), data.short())
-                Type.HANDLE         -> HandleInfo(data.byte(), data.short())
-                Type.TYPE           -> TypeInfo(data.short())
-                Type.INVOKE_DYNAMIC -> InvokeDynamicInfo(data.short(), data.short())
-                else                -> ConstantAdapter()
-            }
+        fun create(tag: Int, data: ClassfileStream): Constant = when(tag) {
+            Type.INT,   Type.FLOAT,  Type.LONG, Type.DOUBLE -> NumberInfo(data, tag)
+            Type.FIELD, Type.METHOD, Type.INTERFACE         -> MemberInfo(tag, data.short(), data.short())
+            Type.UTF8           -> Utf8Info(String(data.fully(data.short())))
+            Type.CLASS          -> ClassInfo(data.short())
+            Type.STRING         -> StringInfo(data.short())
+            Type.NAME_AND_TYPE  -> NameAndTypeInfo(data.short(), data.short())
+            Type.HANDLE         -> HandleInfo(data.byte(), data.short())
+            Type.TYPE           -> TypeInfo(data.short())
+            Type.INVOKE_DYNAMIC -> InvokeDynamicInfo(data.short(), data.short())
+            else                -> ConstantAdapter()
         }
     }
 }

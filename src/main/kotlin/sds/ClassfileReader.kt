@@ -9,8 +9,8 @@ import sds.classfile.attribute.Attribute
 import sds.classfile.constant_pool.Constant as Cons
 import sds.classfile.constant_pool.ConstantAdapter as Adapter
 import sds.classfile.constant_pool.ConstantValueExtractor.extract
-import sds.classfile.constant_pool.NumberInfo
 import sds.classfile.constant_pool.Utf8Info as Utf8
+import sds.classfile.constant_pool.Type
 import sds.util.AccessFlag.get
 import sds.util.DescriptorParser.removeLangPrefix
 
@@ -54,15 +54,12 @@ class ClassfileReader {
         if(pool.size == len) {
             return pool.toTypedArray()
         }
-        val value: Cons = Cons.create(data)
-        pool.add(value)
-        return when(value) {
-            is NumberInfo -> when(value.number) {
-                is Double, is Long -> {
-                    pool.add(Adapter())
-                    readPool(len, data, pool)
-                }
-                else -> readPool(len, data, pool)
+        val tag: Int = data.byte()
+        pool.add(Cons.create(tag, data))
+        return when(tag) {
+            Type.LONG, Type.DOUBLE -> {
+                pool.add(Adapter())
+                readPool(len, data, pool)
             }
             else -> readPool(len, data, pool)
         }
