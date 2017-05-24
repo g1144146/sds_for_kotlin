@@ -5,18 +5,16 @@ import java.io.DataInputStream
 import java.io.InputStream
 
 interface ClassfileStream: AutoCloseable {
-    fun char():   Char
     fun byte():   Int
     fun int():    Int
     fun float():  Float
     fun long():   Long
     fun double(): Double
     fun short():  Int
-    fun unsignedByte():  Int
-    fun unsignedShort(): Int
+    fun unsignedByte(): Int
     fun skip(n: Int)
     fun fully(n: Int): ByteArray
-    fun pointer(): Long
+    fun pointer(): Int
 
     companion object ClassfileStreamFactory {
         fun create(file: String):        ClassfileStream = ImplWithRandomAccessFile(file)
@@ -26,16 +24,14 @@ interface ClassfileStream: AutoCloseable {
     private class ImplWithRandomAccessFile(file: String): ClassfileStream {
         private val raf: RandomAccessFile = RandomAccessFile(file, "r")
 
-        override fun char():   Char   = raf.readChar()
         override fun byte():   Int    = raf.readByte().toInt()
         override fun int():    Int    = raf.readInt()
         override fun float():  Float  = raf.readFloat()
         override fun long():   Long   = raf.readLong()
         override fun double(): Double = raf.readDouble()
         override fun short():  Int    = raf.readShort().toInt()
-        override fun unsignedByte():  Int = raf.readUnsignedByte()
-        override fun unsignedShort(): Int = raf.readUnsignedShort()
-        override fun pointer(): Long = raf.filePointer
+        override fun unsignedByte(): Int = raf.readUnsignedByte()
+        override fun pointer(): Int = raf.filePointer.toInt()
         override fun skip(n: Int) {
             raf.skipBytes(n)
         }
@@ -51,9 +47,8 @@ interface ClassfileStream: AutoCloseable {
 
     private class ImplWithDataInputStream(stream: InputStream): ClassfileStream {
         private val stream: DataInputStream = DataInputStream(stream)
-        private var pointer: Long = 0
+        private var pointer: Int = 0
 
-        override fun char():   Char   = get(Character.BYTES,        stream.readChar())
         override fun byte():   Int    = get(java.lang.Byte.BYTES,   stream.readByte().toInt())
         override fun int():    Int    = get(Integer.BYTES,          stream.readInt())
         override fun float():  Float  = get(java.lang.Float.BYTES,  stream.readFloat())
@@ -61,8 +56,7 @@ interface ClassfileStream: AutoCloseable {
         override fun double(): Double = get(java.lang.Double.BYTES, stream.readDouble())
         override fun short():  Int    = get(java.lang.Short.BYTES,  stream.readShort().toInt())
         override fun unsignedByte():  Int = get(java.lang.Byte.BYTES,  stream.readUnsignedByte())
-        override fun unsignedShort(): Int = get(java.lang.Short.BYTES, stream.readUnsignedShort())
-        override fun pointer(): Long = pointer
+        override fun pointer(): Int = pointer
         override fun skip(n: Int) {
             pointer += n
             stream.skipBytes(n)

@@ -9,7 +9,7 @@ import org.amshove.kluent.shouldEqualTo
 import org.amshove.kluent.shouldThrowTheException
 import sds.classfile.constant_pool.ConstantValueExtractor.extract
 
-class ConstantTest: Spek({
+class ConstantSpec: Spek({
     val constants: Array<Constant> = arrayOf(
         Utf8Info("utf8"),
         NumberInfo(1),
