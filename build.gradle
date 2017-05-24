@@ -57,6 +57,7 @@ sourceSets {
     }
     test {
         kotlin.srcDir 'src/test/kotlin'
+        resources.srcDirs 'src/test/resources'
     }
 }
 
