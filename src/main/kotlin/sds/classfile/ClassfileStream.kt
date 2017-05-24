@@ -4,21 +4,26 @@ import java.io.RandomAccessFile
 import java.io.DataInputStream
 import java.io.InputStream
 
-sealed class ClassfileStream: AutoCloseable {
-    abstract fun char():   Char
-    abstract fun byte():   Int
-    abstract fun int():    Int
-    abstract fun float():  Float
-    abstract fun long():   Long
-    abstract fun double(): Double
-    abstract fun short():  Int
-    abstract fun unsignedByte():  Int
-    abstract fun unsignedShort(): Int
-    abstract fun skip(n: Int)
-    abstract fun fully(n: Int): ByteArray
-    abstract fun pointer(): Long
+interface ClassfileStream: AutoCloseable {
+    fun char():   Char
+    fun byte():   Int
+    fun int():    Int
+    fun float():  Float
+    fun long():   Long
+    fun double(): Double
+    fun short():  Int
+    fun unsignedByte():  Int
+    fun unsignedShort(): Int
+    fun skip(n: Int)
+    fun fully(n: Int): ByteArray
+    fun pointer(): Long
 
-    class ImplForRandomAccessFile(file: String): ClassfileStream() {
+    companion object ClassfileStreamFactory {
+        fun create(file: String):        ClassfileStream = ImplWithRandomAccessFile(file)
+        fun create(stream: InputStream): ClassfileStream = ImplWithDataInputStream(stream)
+    }
+
+    private class ImplWithRandomAccessFile(file: String): ClassfileStream {
         private val raf: RandomAccessFile = RandomAccessFile(file, "r")
 
         override fun char():   Char   = raf.readChar()
@@ -44,7 +49,7 @@ sealed class ClassfileStream: AutoCloseable {
         }
     }
 
-    class ImplForDataInputStream(stream: InputStream): ClassfileStream() {
+    private class ImplWithDataInputStream(stream: InputStream): ClassfileStream {
         private val stream: DataInputStream = DataInputStream(stream)
         private var pointer: Long = 0
 
@@ -65,7 +70,7 @@ sealed class ClassfileStream: AutoCloseable {
         override fun fully(n: Int): ByteArray {
             val byte: ByteArray = ByteArray(n)
             stream.readFully(byte)
-            return byte
+            return get(n, byte)
         }
         override fun close() {
             stream.close()

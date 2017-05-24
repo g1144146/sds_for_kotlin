@@ -3,8 +3,6 @@ package sds
 import java.io.InputStream
 import sds.classfile.Member
 import sds.classfile.ClassfileStream as Stream
-import sds.classfile.ClassfileStream.ImplForDataInputStream
-import sds.classfile.ClassfileStream.ImplForRandomAccessFile
 import sds.classfile.attribute.Attribute
 import sds.classfile.constant_pool.Constant as Cons
 import sds.classfile.constant_pool.ConstantAdapter as Adapter
@@ -18,11 +16,11 @@ class ClassfileReader {
     val classfile: Classfile = Classfile()
 
     constructor(file: String) {
-        read(ImplForRandomAccessFile(file))
+        read(Stream.create(file))
     }
 
     constructor(stream: InputStream) {
-        read(ImplForDataInputStream(stream))
+        read(Stream.create(stream))
     }
 
     private fun read(data: Stream) {
