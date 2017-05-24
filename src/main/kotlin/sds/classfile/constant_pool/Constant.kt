@@ -1,9 +1,9 @@
 package sds.classfile.constant_pool
 
-import sds.classfile.Information
+import sds.classfile.ClassfileInformation
 import sds.classfile.ClassfileStream
 
-open class Constant: Information {
+open class Constant: ClassfileInformation {
     companion object ConstantFactory {
         fun create(tag: Int, data: ClassfileStream): Constant = when(tag) {
             Type.FIELD, Type.METHOD, Type.INTERFACE -> MemberInfo(tag, data.short(), data.short())

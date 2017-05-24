@@ -1,10 +1,10 @@
 package sds.classfile.attribute
 
-import sds.classfile.Information
+import sds.classfile.ClassfileInformation
 import sds.classfile.ClassfileStream
 import sds.classfile.constant_pool.Constant
 
-open class Attribute: Information {
+open class Attribute: ClassfileInformation {
     override fun toString(): String = this.javaClass.simpleName
 
     companion object AttributeFactory {
