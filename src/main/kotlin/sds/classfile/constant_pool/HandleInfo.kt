@@ -2,10 +2,10 @@ package sds.classfile.constant_pool
 
 class HandleInfo(val kind: Int, val index: Int): Constant() {
     override fun toString(): String = "MethodHandle\t" + when(kind) {
-        1 -> "REF_get"
-        2 -> "REF_get"
-        3 -> "REF_put"
-        4 -> "REF_put"
+        1 -> "REF_getField"
+        2 -> "REF_getStatic"
+        3 -> "REF_putField"
+        4 -> "REF_putStatic"
         5 -> "REF_invokeVirtual"
         6 -> "REF_invokeStatic"
         7 -> "REF_invokeSpecial"

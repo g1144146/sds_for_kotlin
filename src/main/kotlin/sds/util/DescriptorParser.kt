@@ -26,7 +26,6 @@ object DescriptorParser {
         val parsed: String = regex.findAll(replaced).map({ matched: MatchResult ->
             val m: String = matched.value
             val len: Int = m.length
-            println(">>> $m")
             when {
                 m.startsWith("[") -> {
                     val last: Int = m.lastIndexOf("[") + 1
@@ -39,14 +38,13 @@ object DescriptorParser {
                             val type: String = m.substring(last + 1, len)
                             removeLangPrefix(type)
                         }
-                    } + (0 until last)
-                            .map { "[]" }
-                            .reduce { str_1: String, str_2: String -> str_1 + str_2 }
+                    } + (0 until last).map { "[]" }
+                                      .reduce { str_1: String, str_2: String -> str_1 + str_2 }
                 }
                 m.startsWith("L") or m.matches("T[A-Z]+".toRegex()) -> {
                     removeLangPrefix(m.substring(1, len))
                 }
-                m.matches("""\(|\)|<|>""".toRegex())                    -> {
+                m.matches("""\(|\)|<|>""".toRegex())                -> {
                     beforeParen = (! ((m == "(") or (m == ")")))
                     m
                 }
