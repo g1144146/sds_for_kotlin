@@ -43,8 +43,8 @@ class ClassfileReader {
         classfile.fields  = (0 until data.short()).map(genMember).toTypedArray()
 
         classfile.fields.forEach { println(it) }
-//        classfile.methods = (0 until data.short()).map(genMember).toTypedArray()
-//        classfile.attributes = (0 until data.short()).map({ genAttribute(data, pool) }).toTypedArray()
+        classfile.methods = (0 until data.short()).map(genMember).toTypedArray()
+        classfile.attributes = (0 until data.short()).map({ genAttribute(data, pool) }).toTypedArray()
         data.close()
     }
 
