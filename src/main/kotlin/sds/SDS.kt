@@ -6,7 +6,7 @@ import java.util.jar.JarFile
 import kotlin.collections.MutableList
 
 class SDS(args: Array<String>) {
-    private var jar: JarFile? = null
+    private var jarfiles: MutableList<JarFile> = mutableListOf()
     private val classfiles: MutableList<String> = mutableListOf()
 
 
@@ -16,7 +16,7 @@ class SDS(args: Array<String>) {
 
     private fun parseArgs(arg: String) {
         when {
-            arg.endsWith(".jar")   -> this.jar = JarFile(File(arg))
+            arg.endsWith(".jar")   -> jarfiles.add(JarFile(File(arg)))
             arg.endsWith(".class") -> classfiles.add(arg)
             else -> throw IllegalArgumentException("invalid file.")
         }
@@ -29,11 +29,13 @@ class SDS(args: Array<String>) {
             }
         }
         // not execute if jar is null
-        jar?.stream()?.forEach { entry: JarEntry? ->
-            val file: String = entry.toString()
-            if(file.endsWith(".class")) {
-                // throws Exception if jar is null
-                val reader: ClassfileReader = ClassfileReader(jar!!.getInputStream(entry))
+        jarfiles.forEach { jar : JarFile ->
+            jar.stream().forEach { entry: JarEntry ->
+                val file: String = entry.toString()
+                if(file.endsWith(".class")) {
+                    // throws Exception if jar is null
+                    val reader: ClassfileReader = ClassfileReader(jar.getInputStream(entry))
+                }
             }
         }
     }
