@@ -3,7 +3,7 @@ package sds.classfile.constant_pool
 import sds.classfile.ClassfileInformation
 import sds.classfile.ClassfileStream
 
-interface Constant: ClassfileInformation {
+abstract class Constant: ClassfileInformation() {
     companion object ConstantFactory {
         fun create(tag: Int, data: ClassfileStream): Constant = when(tag) {
             Type.FIELD, Type.METHOD, Type.INTERFACE -> MemberInfo(tag, data.short(), data.short())
@@ -23,35 +23,35 @@ interface Constant: ClassfileInformation {
     }
 }
 
-class ClassInfo(val index: Int): Constant {
+class ClassInfo(val index: Int): Constant() {
     override fun toString(): String = "Class\t#$index"
 }
 
-class NumberInfo(val number: Number): Constant {
+class NumberInfo(val number: Number): Constant() {
     override fun toString(): String = "${number.javaClass.simpleName}\t$number"
 }
 
-class InvokeDynamicInfo(val bsmAtt: Int, val nameAndType: Int): Constant {
+class InvokeDynamicInfo(val bsmAtt: Int, val nameAndType: Int): Constant() {
     override fun toString(): String = "InvokeDynamic\t#$bsmAtt:#$nameAndType"
 }
 
-class NameAndTypeInfo(val name: Int, val type: Int): Constant {
+class NameAndTypeInfo(val name: Int, val type: Int): Constant() {
     override fun toString(): String = "NameAndType\t#$name:#$type"
 }
 
-class StringInfo(val string: Int): Constant {
+class StringInfo(val string: Int): Constant() {
     override fun toString(): String = "String\t#$string"
 }
 
-class TypeInfo(val desc: Int): Constant {
+class TypeInfo(val desc: Int): Constant() {
     override fun toString(): String = "MethodType\t#$desc"
 }
 
-class Utf8Info(val value: String): Constant {
+class Utf8Info(val value: String): Constant() {
     override fun toString(): String = "Utf8\t$value"
 }
 
-class ConstantAdapter: Constant {
+class ConstantAdapter: Constant() {
     override fun toString(): String = "null"
 }
 

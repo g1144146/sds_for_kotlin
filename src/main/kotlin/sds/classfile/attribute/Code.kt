@@ -6,7 +6,7 @@ import sds.classfile.bytecode.Opcode
 import sds.classfile.constant_pool.Constant as Cons
 import sds.classfile.constant_pool.Utf8Info as Utf8
 
-class Code(data: Stream, pool: Array<Cons>): Attribute {
+class Code(data: Stream, pool: Array<Cons>): Attribute() {
     val maxStack:  Int = data.short()
     val maxLocals: Int = data.short()
     val opcodes: Array<Opcode> = initOpcode(data, pool)

@@ -6,7 +6,7 @@ import sds.classfile.bytecode.MnemonicTable as Table
 import sds.classfile.constant_pool.Constant as Cons
 import sds.util.DescriptorParser.parse
 
-open class Opcode(val pc: Int, val type: String): ClassfileInformation {
+open class Opcode(val pc: Int, val type: String): ClassfileInformation() {
     override fun toString(): String = "$pc - $type"
     companion object OpcodeFactory {
         fun create(pc: Int, data: Stream, pool: Array<Cons>): Opcode {

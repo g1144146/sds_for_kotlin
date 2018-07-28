@@ -4,7 +4,7 @@ import sds.classfile.ClassfileStream
 import sds.classfile.constant_pool.Constant
 import sds.util.AccessFlag.get
 
-class InnerClasses(data: ClassfileStream, pool: Array<Constant>): Attribute {
+class InnerClasses(data: ClassfileStream, pool: Array<Constant>): Attribute() {
     val classes: Array<Array<String>> = (0 until data.short()).map {x: Int ->
         val f: (Int) -> String = { if(check(x, pool.size)) extract(it, pool) else "" }
         val _in:  String = f(data.short())

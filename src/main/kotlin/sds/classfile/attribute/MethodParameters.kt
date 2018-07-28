@@ -4,7 +4,7 @@ import sds.classfile.ClassfileStream
 import sds.classfile.constant_pool.Constant
 import sds.util.AccessFlag.get
 
-class MethodParameters(data: ClassfileStream, pool: Array<Constant>): Attribute {
+class MethodParameters(data: ClassfileStream, pool: Array<Constant>): Attribute() {
     val params: Array<Array<String>> = (0 until data.short()).map {
         arrayOf(extract(data.short(), pool), get(data.short(), "nested"))
     }.toTypedArray()

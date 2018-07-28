@@ -9,7 +9,7 @@ import sds.classfile.attribute.StackMapFrameParser.parseFrame
 import sds.classfile.bytecode.Opcode
 import sds.classfile.constant_pool.Constant as Cons
 
-class StackMapTable(data: Stream, pool: Array<Cons>, opcodes: Array<Opcode>): Attribute {
+class StackMapTable(data: Stream, pool: Array<Cons>, opcodes: Array<Opcode>): Attribute() {
     val entries: Linked<Pair<Int, Int>, Hash<String, ArrayList<String>>> = parseFrame(
         (0 until data.short()).map { StackMapFrame.create(data) }, pool, opcodes
     )

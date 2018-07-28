@@ -2,7 +2,7 @@ package sds.classfile.attribute
 
 import sds.classfile.ClassfileStream as Stream
 
-class RuntimeTypeAnnotations(val name: String, data: Stream): Attribute {
+class RuntimeTypeAnnotations(val name: String, data: Stream): Attribute() {
     val annotations: Array<TypeAnnotation> = (0 until data.short()).map {
         val target: Target = Target.create(data)
         val path: Array<Pair<Int, Int>> = (0 until data.unsignedByte()).map {

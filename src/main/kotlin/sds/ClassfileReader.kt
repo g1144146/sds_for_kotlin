@@ -38,7 +38,8 @@ class ClassfileReader {
         println("${classfile.access}${classfile._this} extends ${classfile._super}")
 
         val genAttribute: (Stream, Array<Cons>) -> Attribute = { _data: Stream, _pool: Array<Cons> ->
-            Attribute.create((_pool[_data.short() - 1] as Utf8).value, _data, _pool) }
+            Attribute.create((_pool[_data.short() - 1] as Utf8).value, _data, _pool)
+        }
         val genMember: (Int) -> Member = { Member(data, pool, genAttribute) }
         classfile.fields  = (0 until data.short()).map(genMember).toTypedArray()
 

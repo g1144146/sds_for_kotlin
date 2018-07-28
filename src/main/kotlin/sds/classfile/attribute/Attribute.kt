@@ -5,7 +5,7 @@ import sds.classfile.ClassfileStream as Stream
 import sds.classfile.bytecode.Opcode
 import sds.classfile.constant_pool.Constant as Cons
 
-interface Attribute: ClassfileInformation {
+abstract class Attribute: ClassfileInformation() {
     companion object AttributeFactory {
         fun create(name: String, data: Stream, pool: Array<Cons>): Attribute {
             val len: Int = data.int()
@@ -43,9 +43,9 @@ interface Attribute: ClassfileInformation {
     }
 }
 
-class Deprecated: Attribute {
+class Deprecated: Attribute() {
     override fun toString(): String = "[Deprecated]"
 }
-class Synthetic: Attribute {
+class Synthetic: Attribute() {
     override fun toString(): String = "[Synthetic]"
 }
