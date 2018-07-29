@@ -12,6 +12,7 @@ for learning Kotlin
 
 * Runtime / Development Environment
     * [Kotlin 1.1.2](https://kotlinlang.org/)
+    * [Gson](https://github.com/google/gson)
 
 * Project Management
     * [Gradle 3.x](http://gradle.org/)
