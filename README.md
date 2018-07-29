@@ -15,7 +15,7 @@ for learning Kotlin
     * [Gson](https://github.com/google/gson)
 
 * Project Management
-    * [Gradle 3.x](http://gradle.org/)
+    * [Gradle 4.x](http://gradle.org/)
 
 * Test Environment
     * [Spek 1.1.1](http://spekframework.org/)
