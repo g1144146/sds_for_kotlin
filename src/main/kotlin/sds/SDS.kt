@@ -5,6 +5,8 @@ import java.util.jar.JarEntry
 import java.util.jar.JarFile
 import kotlin.collections.MutableList
 
+import sds.util.JsonTransformer.transform
+
 class SDS(args: Array<String>) {
     private var jarfiles: MutableList<JarFile> = mutableListOf()
     private val classfiles: MutableList<String> = mutableListOf()
@@ -26,6 +28,7 @@ class SDS(args: Array<String>) {
         if(classfiles.isNotEmpty()) {
             classfiles.forEach { file: String ->
                 val reader: ClassfileReader = ClassfileReader(file)
+                transform(reader.classfile)
             }
         }
         // not execute if jar is null
