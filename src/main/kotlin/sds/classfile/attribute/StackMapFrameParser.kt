@@ -46,7 +46,7 @@ object StackMapFrameParser {
                 }
                 is Chop -> {
                     val deleteArg = 251 - frame.tag
-                    (0 until deleteArg).forEach { locals.removeAt(locals.size - 1) }
+                    (0 until deleteArg).forEach { map.get("local")?.removeAt(locals.size - 1) }
                     map.put("stack", arrayListOf())
                     map.put("local", locals)
                     frame.tag

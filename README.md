@@ -11,10 +11,11 @@ for learning Kotlin
 # Requirements
 
 * Runtime / Development Environment
-    * [Kotlin 1.1.2](https://kotlinlang.org/)
+    * [Kotlin 1.2.51](https://kotlinlang.org/)
+    * [Gson](https://github.com/google/gson)
 
 * Project Management
-    * [Gradle 3.x](http://gradle.org/)
+    * [Gradle 4.x](http://gradle.org/)
 
 * Test Environment
     * [Spek 1.1.1](http://spekframework.org/)
