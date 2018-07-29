@@ -11,7 +11,7 @@ for learning Kotlin
 # Requirements
 
 * Runtime / Development Environment
-    * [Kotlin 1.1.2](https://kotlinlang.org/)
+    * [Kotlin 1.2.51](https://kotlinlang.org/)
     * [Gson](https://github.com/google/gson)
 
 * Project Management
