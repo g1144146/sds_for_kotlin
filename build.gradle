@@ -46,6 +46,7 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:+"
+    compile 'com.google.code.gson:gson:+'
     testCompile 'org.jetbrains.spek:spek-api:1.1.1'
     testCompile 'org.amshove.kluent:kluent:1.21'
     testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.1.1'
