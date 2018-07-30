@@ -22,7 +22,7 @@ object JsonTransformer {
      */
     fun toJsonString(json: LinkedHashMap<String, Any>): String {
         val gson: Gson = GsonBuilder().setPrettyPrinting().create()
-        return gson.toJson(json);
+        return gson.toJson(json)
     }
 
     /**
@@ -165,8 +165,8 @@ object JsonTransformer {
                     }).toMutableList()
                 }
                 is Code -> {
-                    map.plusAssign("maxStack"  to attribute.maxStack)
-                    map.plusAssign("maxLocals" to attribute.maxLocals)
+                    map.plusAssign("maxStack"       to attribute.maxStack)
+                    map.plusAssign("maxLocals"      to attribute.maxLocals)
                     map.plusAssign("exceptionTable" to attribute.exTable.map({
                         val ex = linkedMapOf<String, Any>()
                         ex.plusAssign("catchType" to it.second)
@@ -214,6 +214,9 @@ object JsonTransformer {
                 is SourceFile -> {
                     map["source"] = attribute.source
                 }
+                is StackMapTable -> {
+                    map["entries"] = attribute.entries
+                }
             }
 
             result.add(map)
@@ -255,14 +258,12 @@ object JsonTransformer {
                 is TableSwitch -> {
                     val tableSwitch = hashMapOf<String, Any>("name" to opcode.type)
                     tableSwitch.plusAssign("default" to (opcode.default + opcode.pc))
-                    tableSwitch.plusAssign("offsets" to opcode.offsets.map({
-                        it + opcode.pc
-                    }).toMutableList())
+                    tableSwitch.plusAssign("offsets" to opcode.offsets.map({ it + opcode.pc }).toMutableList())
                     tableSwitch
                 }
                 is LookupSwitch -> {
                     val lookup = hashMapOf<String, Any>("name" to opcode.type)
-                    lookup.plusAssign("default" to (opcode.default + opcode.pc))
+                    lookup.plusAssign("default"      to (opcode.default + opcode.pc))
                     lookup.plusAssign("matchOffsets" to opcode.matchOffset.map({
                         val matchOffset = hashMapOf<String, Int>()
                         matchOffset.plusAssign("match"  to it.first)
@@ -313,12 +314,12 @@ object JsonTransformer {
                         "getstatic",
                         "putstatic",
                         "_new",
-                        "checkcast"      -> opcode.operand.replace("/", ".")
-                        else             -> opcode.operand
+                        "checkcast" -> opcode.operand.replace("/", ".")
+                        else        -> opcode.operand
                     })
                     ref
                 }
-                else -> hashMapOf<String, String>("name" to opcode.type)
+                else -> hashMapOf("name" to opcode.type)
             })
         })
 
