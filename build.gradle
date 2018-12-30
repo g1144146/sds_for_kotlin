@@ -1,11 +1,12 @@
 buildscript {
-    ext.kotlin_version = '1.2.51'
+    ext.kotlin_version = '1.3.11'
     repositories {
+        jcenter()
         mavenCentral()
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:+"
-        classpath "org.junit.platform:junit-platform-gradle-plugin:1.0.0-M4"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.junit.platform:junit-platform-gradle-plugin:1.0.0-M5"
     }
 }
 
@@ -45,11 +46,21 @@ repositories {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:+"
-    compile 'com.google.code.gson:gson:+'
-    testCompile 'org.jetbrains.spek:spek-api:1.1.1'
-    testCompile 'org.amshove.kluent:kluent:1.21'
-    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.1.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'com.google.code.gson:gson:+'
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    testImplementation 'org.jetbrains.spek:spek-api:1.1.1'
+    testImplementation 'org.amshove.kluent:kluent:1.21'
+    testRuntimeOnly 'org.jetbrains.spek:spek-junit-platform-engine:1.1.1'
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
 }
 
 sourceSets {
