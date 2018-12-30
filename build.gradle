@@ -21,12 +21,25 @@ apply plugin: "org.junit.platform.gradle.plugin"
 // MainClassName + Kt
 mainClassName = 'sds.MainKt'
 
+test {
+    jacoco {
+        destinationFile = file("${buildDir}/jacoco/test.exec")
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.2"
+}
+
 jacocoTestReport {
     reports {
         html.enabled = true
         xml.enabled  = true
+        csv.enabled  = true
     }
 }
+
+test.finalizedBy(jacocoTestReport)
 
 junitPlatform {
     // reportsDir file("build/test-results")
